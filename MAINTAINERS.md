@@ -4,13 +4,14 @@ This is a list of maintainers for this project. See [CODEOWNERS.md](./CODEOWNERS
 
 ## Maintainers:
 <!-- TODO: What groups/domains are maintainers a part of? Does your project have domains/areas that are maintained by specific people? List @USERNAMES directly, or any @ALIASES for groups/teams.-->
-- 
+- @IsaacMilarky
 
 ## Approvers:
-- 
+- @IsaacMilarky
+- @decause-gov
 
 ## Reviewers:
-- 
+- @IsaacMilarky
 
 | Roles        | Responsibilities| Requirements  | Defined by|
 | -------------|:---------------|:-------------|:-------------|
