@@ -10,8 +10,8 @@ import datetime
 import pathlib
 import requests
 from requests.exceptions import ReadTimeout
-from metricsLib.constants import AUGUR_HOST
-from metricsLib.constants import TIMEOUT_IN_SECONDS
+from .constants import AUGUR_HOST
+from .constants import TIMEOUT_IN_SECONDS
 
 
 def get_repo_owner_and_name(repo_http_url):
@@ -315,7 +315,7 @@ class Repository(OSSEntity):
         fname = f"{self.repo_owner}/{self.name}/{resource_name}_{self.name}_data.{fmt}"
         return os.path.join(graphs_data_path, fname)
 
-    def get_path_to_graph_data(self, graph_name):
+    def get_path_to_graph_data(self,graphs_data_path, graph_name):
         """
         Derive the path for graph data using svg
         parent path and extension
@@ -324,7 +324,7 @@ class Repository(OSSEntity):
             String path to data.
         """
 
-        return self.get_path_to_resource_data(graph_name, fmt="svg")
+        return self.get_path_to_resource_data(graphs_data_path,graph_name, fmt="svg")
 
 
 class GithubOrg(OSSEntity):
@@ -442,7 +442,7 @@ class GithubOrg(OSSEntity):
 
         return org_path
 
-    def get_path_to_graph_data(self, chart_name):
+    def get_path_to_graph_data(self,graphs_data_path, chart_name):
         """
         Derive the path for graph data using parent
         path and extension
@@ -451,4 +451,4 @@ class GithubOrg(OSSEntity):
             String path to data.
         """
 
-        return self.get_path_to_resource_data(chart_name, fmt="svg")
+        return self.get_path_to_resource_data(graphs_data_path,chart_name, fmt="svg")

@@ -2,7 +2,7 @@
 Module to define methods to create reports
 """
 from datetime import date
-from metricsLib.constants import REPO_REPORT_TEMPLATE, ORG_REPORT_TEMPLATE, DesiredReportBehavior
+from .constants import DesiredReportBehavior
 
 
 def calc_percent_difference(latest, prev):
@@ -120,7 +120,7 @@ def get_heading_report_values(headings, oss_entity):
     return report_values
 
 
-def write_report_to_file(report_template, report_values, oss_entity):
+def write_report_to_file(report_path,report_template, report_values, oss_entity):
     """
     Writes a report markdown file to disc after formatting the values provided through 
     a python dictionary.
@@ -134,15 +134,17 @@ def write_report_to_file(report_template, report_values, oss_entity):
             Oss entity that the report corresponds to the report
     """
     raw_report = report_template.format(**report_values)
-    with open(oss_entity.get_path_to_report_data(), "w+", encoding="utf-8") as file:
+    with open(oss_entity.get_path_to_report_data(report_path), "w+", encoding="utf-8") as file:
         file.write(raw_report)
 
 
-def generate_org_report_files(orgs):
+def generate_org_report_files(report_path,path_to_org_report_template,orgs):
     """
     Generate reports for orgs
 
     Arguments:
+        path_to_org_report_template: str
+            File path to the org report template location on disk
         orgs: collection
             List of orgs to generate reports for
     """
@@ -174,16 +176,22 @@ def generate_org_report_files(orgs):
             'followers_count': DesiredReportBehavior.VALUE_INCREASE.value
         }
 
+        with open(path_to_org_report_template,"r",encoding="utf-8") as file:
+            org_template = file.read()
+
+
         report_values.update(get_heading_report_values(
             org_metric_table_headings, org))
-        write_report_to_file(ORG_REPORT_TEMPLATE, report_values, org)
+        write_report_to_file(report_path,org_template, report_values, org)
 
 
-def generate_repo_report_files(repos):
+def generate_repo_report_files(report_path,path_to_repo_report_template,repos):
     """
     This function generates reports for each repo and writes them to file.
 
     Arguments:
+        path_to_repo_report_template:
+            string of the path to where the repo report template is located.
         repos:
             list of repositories to generate reports for.
     """
@@ -227,5 +235,8 @@ def generate_repo_report_files(repos):
 
         report_values.update(get_heading_report_values(
             metric_table_headings, repo))
+        
+        with open(path_to_repo_report_template,"r",encoding="utf-8") as file:
+            repo_template = file.read()
 
-        write_report_to_file(REPO_REPORT_TEMPLATE, report_values, repo)
+        write_report_to_file(report_path,repo_template, report_values, repo)

@@ -8,7 +8,7 @@ from time import sleep, mktime, gmtime, time, localtime
 from functools import reduce
 import operator
 import requests
-from metricsLib.constants import TIMEOUT_IN_SECONDS, GH_GQL_ENDPOINT, REQUEST_RETRIES
+from .constants import TIMEOUT_IN_SECONDS, GH_GQL_ENDPOINT, REQUEST_RETRIES
 
 # Simple metric that can be represented by a count or value.
 
@@ -205,11 +205,11 @@ class ResourceMetric(BaseMetric):
         # return response
         return response
 
-    def get_values(self,params=None, oss_entity=None):
+    def get_values(self,graphs_path,params=None, oss_entity=None):
 
         r = self.hit_metric(params=params)
 
-        path = oss_entity.get_path_to_resource_data(self.name, fmt=self.format)
+        path = oss_entity.get_path_to_resource_data(graphs_path,self.name, fmt=self.format)
 
         if r.status_code == 200:
             errtext = "There is no data for this repo, in the database you are accessing"
