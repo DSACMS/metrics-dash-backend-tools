@@ -2,7 +2,9 @@
 A backend Python module for use in the DSACMS metrics dashboard.
 
 ## About the Project
-**{project statement}**
+This project contains a Python module for use in the DSACMS metrics dashboard backend. The module contains a set of functionality to support static metrics dashboards with data populated through both REST and graphql apis. 
+
+
 
 <!--- 
 ### Project Vision
@@ -32,14 +34,29 @@ An up-to-date list of core team members can be found in [MAINTAINERS.md](MAINTAI
 
 ## Repository Structure
 
-<!-- TODO: Using the "tree -d" command can be a helpful way to generate this information, but, be sure to update it as the project evolves and changes over time.-->
-
 ```plaintext
-.
+    metrics_dash_backend_tools
+    ├── CODE_OF_CONDUCT.md
+    ├── CODEOWNERS.md
+    ├── COMMUNITY_GUIDELINES.md
+    ├── CONTRIBUTING.md
+    ├── GOVERNANCE.md
+    ├── LICENSE
+    ├── MAINTAINERS.md
+    ├── metrics_dash_backend_tools
+    │   ├── constants.py
+    │   ├── fetch_public_metrics.py
+    │   ├── graphs.py
+    │   ├── __init__.py
+    │   ├── metrics_data_structures.py
+    │   ├── metrics_definitions.py
+    │   ├── oss_metric_entities.py
+    │   └── reports.py
+    ├── pyproject.toml
+    ├── README.md
+    ├── repolinter.json
+    └── SECURITY.md
 ```
-
-
-**{list directories and descriptions}**
 
 # Development and Software Delivery Lifecycle 
 
@@ -53,9 +70,7 @@ This project is monorepo with several apps. Please see the [api](./api/README.md
 
 ## Coding Style and Linters
 
-<!-- TODO - Add the repo's linting and code style guidelines -->
-
-Each application has its own linting and testing guidelines. Lint and code tests are run on each commit, so linters and tests should be run locally before committing.
+This project uses Pylint as its primary linting software. 
 
 ## Branching Model
 
