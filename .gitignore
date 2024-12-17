@@ -3,3 +3,4 @@
 __pycache__/
 tests/__pycache__
 metrics_dash_backend_tools/__pycache__
+dist/
