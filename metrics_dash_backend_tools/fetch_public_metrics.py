@@ -60,7 +60,7 @@ def parse_repos_and_orgs_into_objects(org_name_list, repo_name_list):
             repos.append(Repository(repo_url, org_id))
     return orgs, repos
 
-def get_all_data(all_orgs, all_repos):
+def get_all_data(data_path,all_orgs, all_repos):
     """
     Call relevant methods on orgs and repos
 
@@ -69,8 +69,8 @@ def get_all_data(all_orgs, all_repos):
         all_repos: List of all repos to gather metrics for
     """
     fetch_all_new_metric_data(all_orgs, all_repos)
-    read_previous_metric_data(all_repos, all_orgs)
-    write_metric_data_json_to_file(all_orgs, all_repos)
+    read_previous_metric_data(data_path,all_repos, all_orgs)
+    write_metric_data_json_to_file(data_path,all_orgs, all_repos)
 
 
 def add_info_to_org_from_list_of_repos(repo_list, org):
@@ -151,7 +151,7 @@ def fetch_all_new_metric_data(all_orgs, all_repos):
             print(metric.name)
         add_info_to_org_from_list_of_repos(all_repos, org)
 
-def read_current_metric_data(repos,orgs):
+def read_current_metric_data(data_path,repos,orgs):
     """
     Read current metrics and load previous metrics that 
     were saved in .old files.
@@ -163,7 +163,7 @@ def read_current_metric_data(repos,orgs):
 
     for org in orgs:
 
-        path = org.get_path_to_json_data()
+        path = org.get_path_to_json_data(data_path)
         #generate dict of previous and save it as {path}.old
         #previous_metric_org_json = json.dumps(org.previous_metric_data, indent=4)
 
@@ -183,7 +183,7 @@ def read_current_metric_data(repos,orgs):
 
     for repo in repos:
         #previous_metric_repo_json = json.dumps(repo.previous_metric_data, indent=4)
-        path = repo.get_path_to_json_data()
+        path = repo.get_path_to_json_data(data_path)
 
         with open(f"{path}.old","r",encoding="utf-8") as file:
             #file.write(previous_metric_repo_json)
@@ -199,7 +199,7 @@ def read_current_metric_data(repos,orgs):
         repo.metric_data.update(metric_repo_json)
 
 
-def read_previous_metric_data(repos, orgs):
+def read_previous_metric_data(data_path,repos, orgs):
     """
     This method reads the previously gathered metric data and 
     stores it in the OSSEntity objects passed in.
@@ -212,7 +212,7 @@ def read_previous_metric_data(repos, orgs):
     """
     for org in orgs:
         try:
-            with open(org.get_path_to_json_data(), "r", encoding="utf-8") as file:
+            with open(org.get_path_to_json_data(data_path), "r", encoding="utf-8") as file:
                 prev_data = json.load(file)
                 org.previous_metric_data.update(prev_data)
         except FileNotFoundError:
@@ -222,7 +222,7 @@ def read_previous_metric_data(repos, orgs):
 
     for repo in repos:
         try:
-            with open(repo.get_path_to_json_data(), "r", encoding="utf-8") as file:
+            with open(repo.get_path_to_json_data(data_path), "r", encoding="utf-8") as file:
                 prev_data = json.load(file)
                 repo.previous_metric_data.update(prev_data)
         except FileNotFoundError:
@@ -230,7 +230,7 @@ def read_previous_metric_data(repos, orgs):
                   repo.name)
 
 
-def write_metric_data_json_to_file(orgs, repos):
+def write_metric_data_json_to_file(data_path,orgs, repos):
     """
     Write all metric data to json files.
     
@@ -243,7 +243,7 @@ def write_metric_data_json_to_file(orgs, repos):
 
     for org in orgs:
 
-        path = org.get_path_to_json_data()
+        path = org.get_path_to_json_data(data_path)
         #generate dict of previous and save it as {path}.old
         previous_metric_org_json = json.dumps(org.previous_metric_data, indent=4)
 
@@ -261,7 +261,7 @@ def write_metric_data_json_to_file(orgs, repos):
             file.write(org_metric_data)
 
     for repo in repos:
-        path = repo.get_path_to_json_data()
+        path = repo.get_path_to_json_data(data_path)
 
         previous_metric_repo_json = json.dumps(repo.previous_metric_data, indent=4)
 

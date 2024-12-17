@@ -1,11 +1,11 @@
 """
 Definitions of specific metrics for metricsLib
 """
-from metricsLib.metrics_data_structures import CustomMetric, parse_commits_by_month, RangeMetric
-from metricsLib.metrics_data_structures import GraphQLMetric, LengthMetric, ResourceMetric, BaseMetric
-from metricsLib.metrics_data_structures import ListMetric, parse_nadia_label_into_badge
-from metricsLib.metrics_data_structures import BaseMetric, LanguageMetric
-from metricsLib.constants import TOKEN, AUGUR_HOST
+from .metrics_data_structures import CustomMetric, parse_commits_by_month, RangeMetric
+from .metrics_data_structures import GraphQLMetric, LengthMetric, ResourceMetric, BaseMetric
+from .metrics_data_structures import ListMetric, parse_nadia_label_into_badge
+from .metrics_data_structures import BaseMetric, LanguageMetric
+from .constants import TOKEN, AUGUR_HOST
 
 # The general procedure is to execute all metrics against all repos and orgs
 
