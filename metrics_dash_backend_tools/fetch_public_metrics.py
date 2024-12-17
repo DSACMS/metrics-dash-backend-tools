@@ -60,7 +60,7 @@ def parse_repos_and_orgs_into_objects(org_name_list, repo_name_list):
             repos.append(Repository(repo_url, org_id))
     return orgs, repos
 
-def get_all_data(data_path,all_orgs, all_repos):
+def get_all_data(data_path,graphs_path,all_orgs, all_repos):
     """
     Call relevant methods on orgs and repos
 
@@ -68,7 +68,7 @@ def get_all_data(data_path,all_orgs, all_repos):
         all_orgs: List of all orgs to gather metrics for
         all_repos: List of all repos to gather metrics for
     """
-    fetch_all_new_metric_data(all_orgs, all_repos)
+    fetch_all_new_metric_data(graphs_path,all_orgs, all_repos)
     read_previous_metric_data(data_path,all_repos, all_orgs)
     write_metric_data_json_to_file(data_path,all_orgs, all_repos)
 
@@ -114,7 +114,7 @@ def add_info_to_org_from_list_of_repos(repo_list, org):
     org.store_metrics(org_counts)
 
 
-def fetch_all_new_metric_data(all_orgs, all_repos):
+def fetch_all_new_metric_data(graphs_data_path,all_orgs, all_repos):
     """
     This method applies all desired methods to all desired repos 
     and orgs. It applies and stores all the metrics
@@ -138,7 +138,7 @@ def fetch_all_new_metric_data(all_orgs, all_repos):
             repo.apply_metric_and_store_data(metric)
 
         for metric in RESOURCE_METRICS:
-            repo.apply_metric_and_store_data(metric, oss_entity=repo)
+            repo.apply_metric_and_store_data(metric,graphs_data_path, oss_entity=repo)
 
         for metric in ADVANCED_METRICS:
             repo.apply_metric_and_store_data(metric)

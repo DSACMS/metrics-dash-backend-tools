@@ -17,4 +17,4 @@ def test_metrics_data_gathering():
 
     LOGGER.info(all_orgs)
     
-    get_all_data(metadata_path, all_orgs, all_repos)
+    get_all_data(metadata_path,metadata_path, all_orgs, all_repos)
