@@ -65,6 +65,7 @@ def get_all_data(data_path,graphs_path,all_orgs, all_repos):
     Call relevant methods on orgs and repos
 
     Arguments:
+        data_path: Path to the directory to store json data
         all_orgs: List of all orgs to gather metrics for
         all_repos: List of all repos to gather metrics for
     """
@@ -122,6 +123,7 @@ def fetch_all_new_metric_data(graphs_data_path,all_orgs, all_repos):
     This is mainly to avoid using more api calls than we have to.
 
     Arguments:
+        graphs_data_path: Path to where to store the graph data
         all_orgs: List of all orgs to gather metrics for
         all_repos: List of all repos to gather metrics for
     """
@@ -157,6 +159,7 @@ def read_current_metric_data(data_path,repos,orgs):
     were saved in .old files.
 
     Arguments:
+        data_path: path to the json data
         orgs: orgs to read data for.
         repos: repos to read data for.
     """
@@ -207,6 +210,7 @@ def read_previous_metric_data(data_path,repos, orgs):
     This is for the reports that compare changes since last collection.
 
     Arguments:
+        data_path: path to read the previous json data
         repos: List of all orgs to read metrics for
         orgs: List of all repos to read metrics for
     """
@@ -237,6 +241,7 @@ def write_metric_data_json_to_file(data_path,orgs, repos):
     Keep old metrics as a .old file.
 
     Arguments:
+        data_path: path to write json data to
         orgs: orgs to write to file
         repos: repos to write to file
     """
