@@ -32,7 +32,7 @@ Total number of contributors: <!--CONTRIBUTOR COUNT START--> <!--CONTRIBUTOR COU
 		<tr>
             <td align="center">
                 <a href="https://github.com/IsaacMilarky">
-                    <img src="https://private-avatars.githubusercontent.com/u/24639268?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTEiLCJleHAiOjE3MzQ2MzE0NDAsIm5iZiI6MTczNDYzMDI0MCwicGF0aCI6Ii91LzI0NjM5MjY4In0.ZYVvAkMvrNevGo1Q_ZlYWOZ6HJOfTE3UTnZPTLgqYJ4&v=4" width="100;" alt="IsaacMilarky"/>
+                    <img src="https://avatars.githubusercontent.com/u/24639268?v=4" width="100;" alt="IsaacMilarky"/>
                     <br />
                     <sub><b>Isaac Milarsky</b></sub>
                 </a>
