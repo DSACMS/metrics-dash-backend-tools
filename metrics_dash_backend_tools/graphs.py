@@ -42,7 +42,7 @@ def ignore_formatter(x):
 
     return ''
 
-def generate_all_graphs_for_repos(all_repos):
+def generate_all_graphs_for_repos(graphs_data_path, all_repos):
     """
     Function to generate and save all graphs for the input
     repos.
@@ -52,32 +52,32 @@ def generate_all_graphs_for_repos(all_repos):
     """
     for repo in all_repos:
         print(f"Generating graphs for repo {repo.name}")
-        generate_solid_gauge_issue_graph(repo)
-        generate_repo_sparklines(repo)
-        generate_predominant_languages_graph(repo)
-        generate_language_summary_pie_chart(repo)
-        generate_cost_estimates_bar_chart(repo)
-        generate_time_estimates_bar_chart(repo)
-        generate_average_issue_resolution_graph(repo)
+        generate_solid_gauge_issue_graph(graphs_data_path, repo)
+        generate_repo_sparklines(graphs_data_path, repo)
+        generate_predominant_languages_graph(graphs_data_path, repo)
+        generate_language_summary_pie_chart(graphs_data_path, repo)
+        generate_cost_estimates_bar_chart(graphs_data_path, repo)
+        generate_time_estimates_bar_chart(graphs_data_path, repo)
+        generate_average_issue_resolution_graph(graphs_data_path, repo)
         try:
-            generate_donut_graph_line_complexity_graph(repo)
+            generate_donut_graph_line_complexity_graph(graphs_data_path, repo)
             generate_time_xy_issue_graph(
-                repo, "new_commit_contributors_by_day_over_last_month", "New Contributors"
+                graphs_data_path, repo, "new_commit_contributors_by_day_over_last_month", "New Contributors"
             )
             generate_time_xy_issue_graph(
-                repo, "new_commit_contributors_by_day_over_last_six_months", "New Contributors"
+                graphs_data_path, repo, "new_commit_contributors_by_day_over_last_six_months", "New Contributors"
             )
         except KeyError as e:
             print(f"Could not find metrics to build graphs for repo {repo.name}")
             print(e)
 
         try:
-            generate_libyears_graph(repo)
+            generate_libyears_graph(graphs_data_path, repo)
         except KeyError:
             print(f"Repository {repo.name} has no deps data associated with it!")
 
         try:
-            generate_dryness_percentage_graph(repo)
+            generate_dryness_percentage_graph(graphs_data_path, repo)
         except ValueError as e:
             print("Could not parse DRYness due to percentage values being invalid!")
             print(e)
@@ -85,7 +85,7 @@ def generate_all_graphs_for_repos(all_repos):
             print(f"Could not find metrics to build dryness graphs for repo {repo.name}")
             print(e)
 
-def generate_all_graphs_for_orgs(all_orgs):
+def generate_all_graphs_for_orgs(graphs_data_path, all_orgs):
     """
     Function to iterate through all orgs and generate graphs for each of them
 
@@ -94,17 +94,17 @@ def generate_all_graphs_for_orgs(all_orgs):
     """
     for org in all_orgs:
         print(f"Generating graphs for org {org.name}")
-        generate_solid_gauge_issue_graph(org)
-        generate_time_xy_issue_graph(org, "new_issues_by_day_over_last_six_months", "New Issues")
-        generate_time_xy_issue_graph(org, "new_issues_by_day_over_last_month", "New Issues")
-        generate_top_committer_bar_graph(org)
+        generate_solid_gauge_issue_graph(graphs_data_path, org)
+        generate_time_xy_issue_graph(graphs_data_path, org, "new_issues_by_day_over_last_six_months", "New Issues")
+        generate_time_xy_issue_graph(graphs_data_path, org, "new_issues_by_day_over_last_month", "New Issues")
+        generate_top_committer_bar_graph(graphs_data_path, org)
 
         try:
-            generate_libyears_graph(org)
+            generate_libyears_graph(graphs_data_path, org)
         except KeyError:
             print(f"Org {org.name} has no deps data associated with it!")
 
-def write_repo_chart_to_file(repo, chart, chart_name, custom_func=None, custom_func_params={}):
+def write_repo_chart_to_file(path,repo, chart, chart_name, custom_func=None, custom_func_params={}):
     """
     This function's purpose is to save a pygals chart to a path derived from the
     repository object passed in.
@@ -116,7 +116,7 @@ def write_repo_chart_to_file(repo, chart, chart_name, custom_func=None, custom_f
         custom_func: an optional custom function to render the pygals chart with
     """
 
-    with open(repo.get_path_to_graph_data(chart_name), "wb+") as file:
+    with open(repo.get_path_to_graph_data(path,chart_name), "wb+") as file:
         try:
             if not custom_func:
                 file.write(chart.render())
@@ -127,7 +127,7 @@ def write_repo_chart_to_file(repo, chart, chart_name, custom_func=None, custom_f
                 f"Repo {repo.name} has a division by zero error when trying to make graph")
     # issues_gauge.render_to_file(repo.get_path_to_graph_data("issue_gauge"))
 
-def generate_repo_sparklines(repo):
+def generate_repo_sparklines(path,repo):
     """
     This function generates pygals sparklines graphs for a set of Repository objects.
 
@@ -148,12 +148,12 @@ def generate_repo_sparklines(repo):
         "show_y_labels": True,
         "margin": 10
     }
-    write_repo_chart_to_file(
+    write_repo_chart_to_file( path,
         repo, chart, "commit_sparklines",
         custom_func=chart.render_sparkline, custom_func_params=_kwargs_)
 
 
-def generate_time_xy_issue_graph(oss_entity,data_key,legend_key):
+def generate_time_xy_issue_graph(path, oss_entity,data_key,legend_key):
     """
     This function generates pygals xy time graph for new issue creation over a time period.
 
@@ -175,9 +175,9 @@ def generate_time_xy_issue_graph(oss_entity,data_key,legend_key):
     xy_time_issue_chart.x_labels = [iter[0] for iter in date_series]
     xy_time_issue_chart.add(legend_key, [iter[1] for iter in date_series])
 
-    write_repo_chart_to_file(oss_entity, xy_time_issue_chart, data_key)
+    write_repo_chart_to_file(path, oss_entity, xy_time_issue_chart, data_key)
 
-def generate_donut_graph_line_complexity_graph(oss_entity):
+def generate_donut_graph_line_complexity_graph(path, oss_entity):
     """
     This function generates pygals line complexity donut graph
     for a set of Repository objects.
@@ -202,9 +202,9 @@ def generate_donut_graph_line_complexity_graph(oss_entity):
     num_remaining_lines = (num_total_lines - num_comment_lines) - num_blank_lines
     donut_lines_graph.add('Total Other Lines', num_remaining_lines)
 
-    write_repo_chart_to_file(oss_entity, donut_lines_graph, "total_line_makeup")
+    write_repo_chart_to_file(path, oss_entity, donut_lines_graph, "total_line_makeup")
 
-def generate_solid_gauge_issue_graph(oss_entity):
+def generate_solid_gauge_issue_graph(path, oss_entity):
     """
     This function generates pygals solid gauge issue/pr graphs for a set of Repository objects.
 
@@ -254,9 +254,9 @@ def generate_solid_gauge_issue_graph(oss_entity):
                 'value': merged_pr_percent * 100, 'max_value': 100},
             {'label': "Closed Pull Requests", 'value': closed_pr_percent * 100, 'max_value': 100}])
 
-    write_repo_chart_to_file(oss_entity, issues_gauge, "issue_gauge")
+    write_repo_chart_to_file(path, oss_entity, issues_gauge, "issue_gauge")
 
-def generate_top_committer_bar_graph(oss_entity):
+def generate_top_committer_bar_graph(path, oss_entity):
     """
     This function generates pygals -top committer by org- bar graph.
 
@@ -279,9 +279,9 @@ def generate_top_committer_bar_graph(oss_entity):
         bar_chart.add(committer, commits)
         contributor_count += 1
 
-    write_repo_chart_to_file(oss_entity, bar_chart, "top_committers")
+    write_repo_chart_to_file(path, oss_entity, bar_chart, "top_committers")
 
-def generate_predominant_languages_graph(oss_entity):
+def generate_predominant_languages_graph(path, oss_entity):
     """
     This function generates a pygal predominant programming languages guage graph.
 
@@ -297,7 +297,7 @@ def generate_predominant_languages_graph(oss_entity):
     for lang, lines in predominant_lang.items():
         bar_chart.add(lang, lines)
 
-    write_repo_chart_to_file(oss_entity, bar_chart, "predominant_langs")
+    write_repo_chart_to_file(path, oss_entity, bar_chart, "predominant_langs")
 
 def parse_libyear_list(dependency_list):
     """
@@ -337,7 +337,7 @@ def parse_libyear_list(dependency_list):
     return sorted(to_return, key=lambda d : d["libyear_value"],reverse=True)
 
 
-def generate_libyears_graph(oss_entity):
+def generate_libyears_graph(path, oss_entity):
     """
     Generates a pygal graph to describe libyear metrics for the requested oss_entity
 
@@ -385,7 +385,7 @@ def generate_libyears_graph(oss_entity):
             break
 
     dateline.show_y_labels = False
-    write_repo_chart_to_file(oss_entity, dateline, "libyear_timeline")
+    write_repo_chart_to_file(path, oss_entity, dateline, "libyear_timeline")
 
 def parse_cocomo_dryness_metrics(dryness_string):
     """
@@ -415,7 +415,7 @@ def parse_cocomo_dryness_metrics(dryness_string):
 
     return dryness_metrics
 
-def generate_dryness_percentage_graph(oss_entity):
+def generate_dryness_percentage_graph(path, oss_entity):
     """
     This function generates a pygal DRYness pie graph.
 
@@ -454,10 +454,10 @@ def generate_dryness_percentage_graph(oss_entity):
         sloc_percent
     )
 
-    write_repo_chart_to_file(oss_entity, pie_chart, "DRYness")
+    write_repo_chart_to_file(path, oss_entity, pie_chart, "DRYness")
 
 
-def generate_language_summary_pie_chart(oss_entity):
+def generate_language_summary_pie_chart(path, oss_entity):
     """
     This function generates a pygal pie chart for programming languages 
     and total lines written in each language.
@@ -485,10 +485,10 @@ def generate_language_summary_pie_chart(oss_entity):
         code_lines = entry.get('Code', 0)
         pie_chart.add(entry['Name'], code_lines)
 
-    write_repo_chart_to_file(oss_entity, pie_chart, "language_summary")
+    write_repo_chart_to_file(path, oss_entity, pie_chart, "language_summary")
 
 
-def generate_cost_estimates_bar_chart(oss_entity):
+def generate_cost_estimates_bar_chart(path, oss_entity):
     """
     This function generates a pygal bar chart for estimated costs 
     with rounded values and a dollar sign.
@@ -519,10 +519,10 @@ def generate_cost_estimates_bar_chart(oss_entity):
     bar_chart.add(f'Estimated Cost High (${estimated_cost_high:,.2f})',
                   estimated_cost_high)
 
-    write_repo_chart_to_file(oss_entity, bar_chart, "estimated_project_costs")
+    write_repo_chart_to_file(path, oss_entity, bar_chart, "estimated_project_costs")
 
 
-def generate_time_estimates_bar_chart(oss_entity):
+def generate_time_estimates_bar_chart(path, oss_entity):
     """
     This function generates a pygal bar chart for estimated time 
     of project in months rounded to the nearest tenth.
@@ -552,10 +552,10 @@ def generate_time_estimates_bar_chart(oss_entity):
                   estimated_schedule_months_low)
     bar_chart.add(None, [0])
 
-    write_repo_chart_to_file(oss_entity, bar_chart, "estimated_project_time")
+    write_repo_chart_to_file(path, oss_entity, bar_chart, "estimated_project_time")
 
 
-def generate_people_estimate_bar_chart(oss_entity):
+def generate_people_estimate_bar_chart(path, oss_entity):
     """
     This function generates a pygal bar chart for estimated people 
     working on the project rounded to the nearest integer.
@@ -582,9 +582,9 @@ def generate_people_estimate_bar_chart(oss_entity):
     bar_chart.add(f'Estimated Contributors ({estimated_people_low:,.0f} ppl)', estimated_people_low)
     bar_chart.add(None, [0])
 
-    write_repo_chart_to_file(oss_entity, bar_chart, "estimated_people_contributing")
+    write_repo_chart_to_file(path, oss_entity, bar_chart, "estimated_people_contributing")
 
-def generate_average_issue_resolution_graph(oss_entity):
+def generate_average_issue_resolution_graph(path, oss_entity):
     """
     This function generates a pygal gauge chart for average issue resolution time.
 
@@ -614,4 +614,4 @@ def generate_average_issue_resolution_graph(oss_entity):
     gauge_graph.title = f"Average Issue Resolution Time for {repo_name} \n Average Time: {round(days)} days"
     gauge_graph.add("Days", round(days))
 
-    write_repo_chart_to_file(oss_entity, gauge_graph, "average_issue_resolution_time")
+    write_repo_chart_to_file(path, oss_entity, gauge_graph, "average_issue_resolution_time")
