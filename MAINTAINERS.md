@@ -38,13 +38,6 @@ Total number of contributors: <!--CONTRIBUTOR COUNT START--> <!--CONTRIBUTOR COU
                 </a>
             </td>
             <td align="center">
-                <a href="https://github.com/sachin-panayil">
-                    <img src="https://avatars.githubusercontent.com/u/79382140?v=4" width="100;" alt="sachin-panayil"/>
-                    <br />
-                    <sub><b>Sachin Panayil</b></sub>
-                </a>
-            </td>
-            <td align="center">
                 <a href="https://github.com/cms-eo14168">
                     <img src="https://avatars.githubusercontent.com/u/197958188?v=4" width="100;" alt="cms-eo14168"/>
                     <br />
@@ -298,3 +291,7 @@ In rare cases, a hotfix for a prior release may be required out-of-phase with th
 
 
 
+ 
+ ## Maintainers List: 
+<!-- TODO: What groups/domains are maintainers a part of? Does your project have domains/areas that are maintained by specific people? List @USERNAMES directly, or any @ALIASES for groups/teams. -->
+ - 
