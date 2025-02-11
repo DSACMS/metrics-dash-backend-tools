@@ -1,0 +1,46 @@
+{
+  "name": "metrics-dash-backend-tools",
+  "description": "A backend Python module for use in the DSACMS metrics dashboard.",
+  "longDescription": "",
+  "status": "",
+  "permissions": {
+    "license": [
+      {
+        "name": "",
+        "URL": ""
+      }
+    ],
+    "usageType": "",
+    "exemptionText": ""
+  },
+  "organization": "",
+  "repositoryURL": "https://github.com/DSACMS/metrics-dash-backend-tools",
+  "vcs": "git",
+  "laborHours": 3896,
+  "platforms": [],
+  "categories": [],
+  "softwareType": "",
+  "languages": [
+    "Python"
+  ],
+  "maintenance": "",
+  "date": {
+    "created": "2024-12-13T18:30:09Z",
+    "lastModified": "2025-02-11T22:03:10Z",
+    "metaDataLastUpdated": "2025-02-11T22:03:41.997Z"
+  },
+  "tags": [],
+  "contact": {
+    "email": "",
+    "name": ""
+  },
+  "localisation": false,
+  "repositoryType": "",
+  "userInput": false,
+  "fismaLevel": "",
+  "group": "",
+  "subsetInHealthcare": [],
+  "userType": [],
+  "repositoryHost": "github",
+  "maturityModelTier": 0
+}
