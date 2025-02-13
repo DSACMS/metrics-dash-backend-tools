@@ -29,7 +29,7 @@
     "lastModified": "2025-02-11T22:03:10Z",
     "metaDataLastUpdated": "2025-02-11T22:03:41.997Z"
   },
-  "tags": ["package",  "metrics", "backend"],
+  "tags": ["package", "metrics", "backend", "pypi", "multiplatform", "CHAOSS", "Augur"],
   "contact": {
     "email": "opensource@cms.hhs.gov",
     "name": "CMS Open Source Team"
