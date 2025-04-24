@@ -4,8 +4,6 @@ entity objects.
 """
 import os
 import json
-from .metrics_definitions import SIMPLE_METRICS, ORG_METRICS, ADVANCED_METRICS
-from .metrics_definitions import PERIODIC_METRICS, RESOURCE_METRICS
 from .oss_metric_entities import GithubOrg, Repository
 
 def parse_tracked_repos_file(metadata_path,org=None):
@@ -60,7 +58,7 @@ def parse_repos_and_orgs_into_objects(org_name_list, repo_name_list):
             repos.append(Repository(repo_url, org_id))
     return orgs, repos
 
-def get_all_data(data_path,graphs_path,all_orgs, all_repos):
+def get_all_data(data_path,graphs_path,all_orgs, all_repos, metrics_to_run,resource_metrics_to_run=[]):
     """
     Call relevant methods on orgs and repos
 
@@ -69,7 +67,7 @@ def get_all_data(data_path,graphs_path,all_orgs, all_repos):
         all_orgs: List of all orgs to gather metrics for
         all_repos: List of all repos to gather metrics for
     """
-    fetch_all_new_metric_data(graphs_path,all_orgs, all_repos)
+    fetch_all_new_metric_data(graphs_path,all_orgs, all_repos,metrics_to_run,resource_metrics_to_run)
     read_previous_metric_data(data_path,all_repos, all_orgs)
     write_metric_data_json_to_file(data_path,all_orgs, all_repos)
 
@@ -115,7 +113,7 @@ def add_info_to_org_from_list_of_repos(repo_list, org):
     org.store_metrics(org_counts)
 
 
-def fetch_all_new_metric_data(graphs_data_path,all_orgs, all_repos):
+def fetch_all_new_metric_data(graphs_data_path,all_orgs, all_repos, metrics_to_run,resource_metrics_to_run=[]):
     """
     This method applies all desired methods to all desired repos 
     and orgs. It applies and stores all the metrics
@@ -133,17 +131,12 @@ def fetch_all_new_metric_data(graphs_data_path,all_orgs, all_repos):
     for repo in all_repos:
         print(f"Fetching metrics for repo {repo.name}, id #{repo.repo_id}.")
         # Get info from all metrics for each repo
-        for metric in SIMPLE_METRICS:
-            repo.apply_metric_and_store_data(metric)
-
-        for metric in PERIODIC_METRICS:
-            repo.apply_metric_and_store_data(metric)
-
-        for metric in RESOURCE_METRICS:
+        for metric in resource_metrics_to_run:
             repo.apply_metric_and_store_data(metric,graphs_data_path, oss_entity=repo)
 
-        for metric in ADVANCED_METRICS:
-            repo.apply_metric_and_store_data(metric)
+        for metric_list in metrics_to_run:
+            for metric in metric_list:
+                repo.apply_metric_and_store_data(metric)
 
     # Capture all metric data for all Github orgs
     for org in all_orgs:
