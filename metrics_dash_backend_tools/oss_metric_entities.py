@@ -28,7 +28,11 @@ def get_repo_owner_and_name(repo_http_url):
     # The first group contains the owner of the github repo extracted from the url
     # The second group contains the name of the github repo extracted from the url
     # 'But what is a regular expression?' ----> https://docs.python.org/3/howto/regex.html
-    regex = r"https?:\/\/github\.com\/([A-Za-z0-9 \- _]+)\/([A-Za-z0-9 \- _ \.]+)(.git)?\/?$"
+    if 'cms.gov' in repo_http_url:
+        regex = r"https?:\/\/github\.cms\.gov\/([A-Za-z0-9 \- _]+)\/([A-Za-z0-9 \- _ \.]+)(.git)?\/?$"
+    else:
+        regex = r"https?:\/\/github\.com\/([A-Za-z0-9 \- _]+)\/([A-Za-z0-9 \- _ \.]+)(.git)?\/?$"
+    
     result = re.search(regex, repo_http_url)
 
     if not result:
