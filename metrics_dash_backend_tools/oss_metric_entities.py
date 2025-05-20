@@ -215,17 +215,18 @@ class Repository(OSSEntity):
         #else:
         #    endpoint = f"{AUGUR_HOST}/repo-groups/{owner_id}/repos"
         endpoint = f"{AUGUR_HOST}/owner/{owner.lower()}/repo/{repo_name.lower()}"
+        print(endpoint)
         super().__init__(repo_name, endpoint)
 
         response = requests.get(
             self.augur_util_endpoint, timeout=TIMEOUT_IN_SECONDS)
-        response_json = json.loads(response.text)
 
         try:
+            response_json = json.loads(response.text)
             print(endpoint)
             print(response_json)
             repo_val = response_json[0]
-        except (IndexError,KeyError):
+        except (IndexError,KeyError, json.decoder.JSONDecodeError):
             repo_val = {}
 
         # print(f"!!!{repo_val}")

@@ -58,7 +58,7 @@ def parse_repos_and_orgs_into_objects(org_name_list, repo_name_list):
             repos.append(Repository(repo_url, org_id))
     return orgs, repos
 
-def get_all_data(data_path,graphs_path,all_orgs, all_repos, metrics_to_run,resource_metrics_to_run=[]):
+def get_all_data(data_path,graphs_path,all_orgs, all_repos, metrics_to_run):
     """
     Call relevant methods on orgs and repos
 
@@ -67,7 +67,7 @@ def get_all_data(data_path,graphs_path,all_orgs, all_repos, metrics_to_run,resou
         all_orgs: List of all orgs to gather metrics for
         all_repos: List of all repos to gather metrics for
     """
-    fetch_all_new_metric_data(graphs_path,all_orgs, all_repos,metrics_to_run,resource_metrics_to_run)
+    fetch_all_new_metric_data(graphs_path,all_orgs, all_repos,metrics_to_run)
     read_previous_metric_data(data_path,all_repos, all_orgs)
     write_metric_data_json_to_file(data_path,all_orgs, all_repos)
 
@@ -113,7 +113,7 @@ def add_info_to_org_from_list_of_repos(repo_list, org):
     org.store_metrics(org_counts)
 
 
-def fetch_all_new_metric_data(graphs_data_path,all_orgs, all_repos, metrics_to_run,resource_metrics_to_run=[]):
+def fetch_all_new_metric_data(graphs_data_path,all_orgs, all_repos, metrics_to_run):
     """
     This method applies all desired methods to all desired repos 
     and orgs. It applies and stores all the metrics
@@ -131,17 +131,16 @@ def fetch_all_new_metric_data(graphs_data_path,all_orgs, all_repos, metrics_to_r
     for repo in all_repos:
         print(f"Fetching metrics for repo {repo.name}, id #{repo.repo_id}.")
         # Get info from all metrics for each repo
-        for metric in resource_metrics_to_run:
+        for metric in metrics_to_run['RESOURCE_METRICS']:
             repo.apply_metric_and_store_data(metric,graphs_data_path, oss_entity=repo)
 
-        for metric_list in metrics_to_run:
-            for metric in metric_list:
-                repo.apply_metric_and_store_data(metric)
+        for metric in metrics_to_run['REPO_METRICS']:
+            repo.apply_metric_and_store_data(metric)
 
     # Capture all metric data for all Github orgs
     for org in all_orgs:
         print(f"Fetching metrics for org {org.name} id #{org.repo_group_id}")
-        for metric in ORG_METRICS:
+        for metric in metrics_to_run['ORG_METRICS']:
             org.apply_metric_and_store_data(metric)
             print(metric.name)
         add_info_to_org_from_list_of_repos(all_repos, org)
