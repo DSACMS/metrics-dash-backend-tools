@@ -134,9 +134,8 @@ def fetch_all_new_metric_data(graphs_data_path,all_orgs, all_repos, metrics_to_r
         for metric in metrics_to_run['RESOURCE_METRICS']:
             repo.apply_metric_and_store_data(metric,graphs_data_path, oss_entity=repo)
 
-        for metric_list in metrics_to_run['REPO_METRICS']:
-            for metric in metric_list:
-                repo.apply_metric_and_store_data(metric)
+        for metric in metrics_to_run['REPO_METRICS']:
+            repo.apply_metric_and_store_data(metric)
 
     # Capture all metric data for all Github orgs
     for org in all_orgs:
