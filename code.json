@@ -4,43 +4,77 @@
   "longDescription": "This project contains a Python module for use in the DSACMS metrics dashboard backend. The module contains a set of functionality to support static metrics dashboards with data populated through both REST and graphql apis.",
   "status": "Production",
   "permissions": {
-    "license": [
+    "licenses": [
       {
-        "name": "CC0 1.0 Universal",
+        "name": "CC0-1.0",
         "URL": "https://github.com/DSACMS/metrics-dash-backend-tools/blob/main/LICENSE"
       }
     ],
-    "usageType": "openSource",
-    "exemptionText": ""
+    "usageType": [
+      "openSource"
+    ]
   },
   "organization": "Centers for Medicare & Medicaid Services",
   "repositoryURL": "https://github.com/DSACMS/metrics-dash-backend-tools",
+  "repositoryHost": "github.com/DSACMS",
+  "repositoryVisibility": "public",
   "vcs": "git",
-  "laborHours": 3896,
-  "platforms": ["windows", "mac", "linux"],
-  "categories": ["application-development"],
+  "laborHours": 3927,
+  "reuseFrequency": {
+    "forks": 1
+  },
+  "platforms": [
+    "windows",
+    "mac",
+    "linux"
+  ],
+  "categories": [
+    "application-development"
+  ],
   "softwareType": "standalone/backend",
   "languages": [
     "Python"
   ],
   "maintenance": "internal",
+  "contractNumber": [
+    "0"
+  ],
+  "SBOM": "https://github.com/DSACMS/metrics-dash-backend-tools/network/dependencies",
   "date": {
     "created": "2024-12-13T18:30:09Z",
-    "lastModified": "2025-02-11T22:03:10Z",
-    "metaDataLastUpdated": "2025-02-11T22:03:41.997Z"
+    "lastModified": "2025-05-20T19:30:27Z",
+    "metadataLastUpdated": "2025-11-21T15:26:30.962Z"
   },
-  "tags": ["package", "metrics", "backend", "pypi", "multiplatform", "CHAOSS", "Augur"],
+  "tags": [
+    "package",
+    "metrics",
+    "backend",
+    "pypi",
+    "multiplatform",
+    "CHAOSS",
+    "Augur"
+  ],
   "contact": {
     "email": "opensource@cms.hhs.gov",
-    "name": "CMS Open Source Team"
+    "name": "CMS Open Source Program Office"
   },
+  "feedbackMechanism": "https://github.com/DSACMS/metrics-dash-backend-tools/issues",
+  "AIUseCaseID": "0",
   "localisation": false,
   "repositoryType": "package",
   "userInput": false,
-  "fismaLevel": "Low",
-  "group": "CMS/OA/DSAC",
-  "subsetInHealthcare": ["Operational"],
-  "userType": ["Government"],
-  "repositoryHost": "github.com/DSACMS",
+  "fismaLevel": "low",
+  "group": "HHS/CMS/OA/DSAC",
+  "projects": [
+    "Metrics",
+    "Metrics_Frontend"
+  ],
+  "systems": [],
+  "subsetInHealthcare": [
+    "operational"
+  ],
+  "userType": [
+    "government"
+  ],
   "maturityModelTier": 3
 }
