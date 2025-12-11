@@ -61,7 +61,8 @@
     "pypi",
     "multiplatform",
     "CHAOSS",
-    "Augur"
+    "Augur",
+    "featured"
   ],
   "contact": {
     "email": "opensource@cms.hhs.gov",
