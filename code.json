@@ -1,5 +1,6 @@
 {
   "name": "metrics-dash-backend-tools",
+  "version": "",
   "description": "A backend Python module for use in the DSACMS metrics dashboard.",
   "longDescription": "This project contains a Python module for use in the DSACMS metrics dashboard backend. The module contains a set of functionality to support static metrics dashboards with data populated through both REST and graphql apis.",
   "status": "Production",
@@ -18,10 +19,15 @@
   "repositoryURL": "https://github.com/DSACMS/metrics-dash-backend-tools",
   "repositoryHost": "github.com/DSACMS",
   "repositoryVisibility": "public",
+  "homepageURL": "",
+  "downloadURL": "",
+  "disclaimerURL": "",
+  "disclaimerText": "",
   "vcs": "git",
-  "laborHours": 3927,
+  "laborHours": 3943,
   "reuseFrequency": {
-    "forks": 1
+    "forks": 1,
+    "clones": 0
   },
   "platforms": [
     "windows",
@@ -40,10 +46,13 @@
     "0"
   ],
   "SBOM": "https://github.com/DSACMS/metrics-dash-backend-tools/network/dependencies",
+  "relatedCode": [],
+  "reusedCode": [],
+  "partners": [],
   "date": {
     "created": "2024-12-13T18:30:09Z",
-    "lastModified": "2025-05-20T19:30:27Z",
-    "metadataLastUpdated": "2025-11-21T15:26:30.962Z"
+    "lastModified": "2025-11-21T15:59:50Z",
+    "metadataLastUpdated": "2025-12-11T18:46:02.410Z"
   },
   "tags": [
     "package",
