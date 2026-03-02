@@ -8,6 +8,8 @@ import json
 import os
 import datetime
 import pathlib
+import urllib
+from urllib.parse import urlparse
 import requests
 from requests.exceptions import ReadTimeout
 from .constants import AUGUR_HOST
@@ -28,10 +30,13 @@ def get_repo_owner_and_name(repo_http_url):
     # The first group contains the owner of the github repo extracted from the url
     # The second group contains the name of the github repo extracted from the url
     # 'But what is a regular expression?' ----> https://docs.python.org/3/howto/regex.html
-    if 'cms.gov' in repo_http_url:
+    hostname = urlparse(repo_http_url).hostname
+    if 'cms.gov' in hostname:
         regex = r"https?:\/\/github\.cms\.gov\/([A-Za-z0-9 \- _]+)\/([A-Za-z0-9 \- _ \.]+)(.git)?\/?$"
-    else:
+    elif hostname == "github.com":
         regex = r"https?:\/\/github\.com\/([A-Za-z0-9 \- _]+)\/([A-Za-z0-9 \- _ \.]+)(.git)?\/?$"
+    else:
+        return None, None
     
     result = re.search(regex, repo_http_url)
 
