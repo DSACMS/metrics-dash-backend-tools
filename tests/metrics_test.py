@@ -18,6 +18,11 @@ def test_metrics_data_gathering():
     all_orgs, all_repos = parse_repos_and_orgs_into_objects(org_urls, repo_urls)
 
     LOGGER.info(all_orgs)
-    
-    metrics_lists = [SIMPLE_METRICS,ORG_METRICS,ADVANCED_METRICS,PERIODIC_METRICS]
-    get_all_data(metadata_path,metadata_path, all_orgs, all_repos,metrics_lists,RESOURCE_METRICS)
+
+    metrics_lists = {
+        "REPO_METRICS" : SIMPLE_METRICS + ADVANCED_METRICS + PERIODIC_METRICS,
+        "ORG_METRICS" : ORG_METRICS,
+        "RESOURCE_METRICS": RESOURCE_METRICS
+    }
+
+    get_all_data(metadata_path,metadata_path, all_orgs, all_repos,metrics_lists)
