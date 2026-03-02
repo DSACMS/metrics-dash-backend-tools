@@ -31,7 +31,7 @@ def get_repo_owner_and_name(repo_http_url):
     # The second group contains the name of the github repo extracted from the url
     # 'But what is a regular expression?' ----> https://docs.python.org/3/howto/regex.html
     hostname = urlparse(repo_http_url).hostname
-    if 'cms.gov' in hostname:
+    if 'github.cms.gov' == hostname:
         regex = r"https?:\/\/github\.cms\.gov\/([A-Za-z0-9 \- _]+)\/([A-Za-z0-9 \- _ \.]+)(.git)?\/?$"
     elif hostname == "github.com":
         regex = r"https?:\/\/github\.com\/([A-Za-z0-9 \- _]+)\/([A-Za-z0-9 \- _ \.]+)(.git)?\/?$"
